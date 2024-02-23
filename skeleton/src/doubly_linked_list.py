@@ -3,24 +3,40 @@ from src.linked_list_node import LinkedListNode
 
 class DoublyLinkedList:
     def __init__(self):
-        self._head: LinkedListNode = None
-        self._tail: LinkedListNode = None
+        self._head: LinkedListNode | None = None
+        self._tail: LinkedListNode | None = None
         self._count = 0
 
     @property
+    def is_empty(self):
+        if self._count == 0:
+            return True
+        elif self._count >= 1:
+            return False
+
+    @property
     def count(self):
-        raise NotImplementedError()
+        return self._count
 
     @property
     def head(self):
-        raise NotImplementedError()
+        return self._head
 
     @property
     def tail(self):
-        raise NotImplementedError()
+        return self._tail
 
     def add_first(self, value):
-        raise NotImplementedError()
+        node = LinkedListNode(value)
+        if self.is_empty:
+            self._head = node
+            self._tail = node
+        else:
+            node.next = self._head
+            self._head.prev = node
+            self._head = node
+
+        self._count += 1
 
     def add_last(self, value):
         raise NotImplementedError()
@@ -41,7 +57,14 @@ class DoublyLinkedList:
         raise NotImplementedError()
 
     def values(self):
-        raise NotImplementedError()
+        values_tuple = ()
+        if not self.is_empty:
+            current = self._head
+            while current is not None:
+                values_tuple += (current.value,)
+                current = current.next
+
+        return values_tuple
 
     def _insert_before_head(self, value):
         raise NotImplementedError()
