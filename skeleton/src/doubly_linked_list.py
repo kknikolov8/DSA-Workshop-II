@@ -27,28 +27,10 @@ class DoublyLinkedList:
         return self._tail
 
     def add_first(self, value):
-        node = LinkedListNode(value)
-        if self.is_empty:
-            self._head = node
-            self._tail = node
-        else:
-            node.next = self._head
-            self._head.prev = node
-            self._head = node
-
-        self._count += 1
+        self._insert_before_head(value)
 
     def add_last(self, value):
-        node = LinkedListNode(value)
-        if self.is_empty:
-            self._head = node
-            self._tail = node
-        else:
-            node.prev = self._tail
-            self._tail.next = node
-            self._tail = node
-
-        self._count += 1
+        self._insert_after_tail(value)
 
     def insert_after(self, node, value):
         raise NotImplementedError()
@@ -57,10 +39,24 @@ class DoublyLinkedList:
         raise NotImplementedError()
 
     def remove_first(self):
-        raise NotImplementedError()
+        if self.is_empty:
+            raise ValueError("Cannot remove items from an empty list!")
+        else:
+            if self._head is not None:
+                node_for_removal = self._head.value
+                self._head = self._head.next
+                self._count -= 1
+                return node_for_removal
 
     def remove_last(self):
-        raise NotImplementedError()
+        if self.is_empty:
+            raise ValueError("Cannot remove items from an empty list!")
+        else:
+            if self._tail is not None:
+                node_for_removal = self._tail.value
+                self._tail = self._tail.prev
+                self._count -= 1
+                return node_for_removal
 
     def find(self, value):
         if self.is_empty:
@@ -84,7 +80,25 @@ class DoublyLinkedList:
         return values_tuple
 
     def _insert_before_head(self, value):
-        raise NotImplementedError()
+        node = LinkedListNode(value)
+        if self.is_empty:
+            self._head = node
+            self._tail = node
+        else:
+            node.next = self._head
+            self._head.prev = node
+            self._head = node
+
+        self._count += 1
 
     def _insert_after_tail(self, value):
-        raise NotImplementedError()
+        node = LinkedListNode(value)
+        if self.is_empty:
+            self._head = node
+            self._tail = node
+        else:
+            node.prev = self._tail
+            self._tail.next = node
+            self._tail = node
+
+        self._count += 1
