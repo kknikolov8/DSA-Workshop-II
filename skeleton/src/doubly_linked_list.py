@@ -33,10 +33,36 @@ class DoublyLinkedList:
         self._insert_after_tail(value)
 
     def insert_after(self, node, value):
-        raise NotImplementedError()
+        if node is None:
+            raise ValueError("Cannot insert after a None node!")
+
+        new_node = LinkedListNode(value)
+        new_node.prev = node
+        new_node.next = node.next
+
+        if node.next is None:
+            self._tail = new_node
+        else:
+            node.next.prev = new_node
+
+        node.next = new_node
+        self._count += 1
 
     def insert_before(self, node, value):
-        raise NotImplementedError()
+        if node is None:
+            raise ValueError("Cannot insert before a None node")
+
+        new_node = LinkedListNode(value)
+        new_node.next = node
+        new_node.prev = node.prev
+
+        if node.prev is None:
+            self._head = new_node
+        else:
+            node.prev.next = new_node
+
+        node.prev = new_node
+        self._count += 1
 
     def remove_first(self):
         if self.is_empty:
