@@ -39,7 +39,16 @@ class DoublyLinkedList:
         self._count += 1
 
     def add_last(self, value):
-        raise NotImplementedError()
+        node = LinkedListNode(value)
+        if self.is_empty:
+            self._head = node
+            self._tail = node
+        else:
+            node.prev = self._tail
+            self._tail.next = node
+            self._tail = node
+
+        self._count += 1
 
     def insert_after(self, node, value):
         raise NotImplementedError()
@@ -54,7 +63,15 @@ class DoublyLinkedList:
         raise NotImplementedError()
 
     def find(self, value):
-        raise NotImplementedError()
+        if self.is_empty:
+            return None
+        else:
+            current = self.head
+            while current is not None:
+                if current.value == value:
+                    return current
+                current = current.next
+            return None
 
     def values(self):
         values_tuple = ()
